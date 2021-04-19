@@ -20,10 +20,9 @@ tic_tac_toe = TicTacToe.new
 game_manager.players.each do |player|
   player.add_observer(game_manager, :call_event)
   player.add_observer(tic_tac_toe, :call_event)
+  # register event <- method names. Those methods will be called on observable change
+  player.on_move = %i[switch_player place_move draw_board]
 end
-
-# register method names -> event
-player1.on_move = %i[switch_player place_move draw_board]
 
 # player1.invoke(:switch_player)
 # player1.invoke(:place_move, 1, player1.sign, tic_tac_toe.board)
