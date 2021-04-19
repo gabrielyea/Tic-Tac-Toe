@@ -15,16 +15,15 @@ class TicTacToe
     board[n.x][n.y] = 'x'
   end
 
+  def get_list_by_player(get_pos, convert_to_list)
+    get_pos.call(board, 'x', convert_to_list)
+  end
+
   def draw_board
     board.each do |row|
       print row
       puts
     end
-  end
-
-  def test1(get_pos, convert_to_list)
-    n = get_pos.call(board, 'x', convert_to_list)
-    puts n
   end
 end
 
@@ -49,5 +48,5 @@ convert_to_list = ->(*args) { args[2].to_a << [args[0], args[1]] } # when positi
 my_tic_tac = TicTacToe.new
 my_tic_tac.place_move(5, get_2d_array_pos, convert_to_coord)
 my_tic_tac.place_move(8, get_2d_array_pos, convert_to_coord)
-my_tic_tac.test1(get_2d_array_pos, convert_to_list)
+my_tic_tac.get_list_by_player(get_2d_array_pos, convert_to_list)
 my_tic_tac.draw_board
