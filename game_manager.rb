@@ -11,22 +11,24 @@ class GameManager
     @players = []
   end
 
-  def call_event(method_name)
-    send method_name
+  def call_event(method_name, *args)
+    send method_name, args if respond_to?(method_name, true)
   end
 
-  def switch_player
-    @player_index += 1
-    @player_index = @player_index % @players.size
-    puts @players[@player_index].name
-  end
-
-  def current_player
+  def current_player(*args)
     @players[@player_index]
   end
 
   def player_by_index(index)
     @players[index]
+  end
+
+  private
+
+  def switch_player(*args)
+    @player_index += 1
+    @player_index = @player_index % @players.size
+    #puts @players[@player_index].name
   end
 end
 
