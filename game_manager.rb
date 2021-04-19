@@ -4,11 +4,15 @@ require_relative 'player_class'
 
 # Manages player turns
 class GameManager
-  attr_reader :players
+  attr_reader :players, :player_index
 
   def initialize
     @player_index = 0
     @players = []
+  end
+
+  def call_event(method_name)
+    send method_name
   end
 
   def switch_player
@@ -26,13 +30,13 @@ class GameManager
   end
 end
 
-player1 = Player.new('p1', 'o')
-player2 = Player.new('p2', '+')
+# player1 = Player.new('p1', 'o')
+# player2 = Player.new('p2', '+')
 
-game_manager = GameManager.new
-game_manager.players << (player1)
-game_manager.players << (player2)
+# game_manager = GameManager.new
+# game_manager.players << (player1)
+# game_manager.players << (player2)
 
-player1.add_observer(game_manager, :switch_player)
+# player1.add_observer(game_manager, :switch_player)
 
-player1.on_turn_over
+# player1.on_turn_over

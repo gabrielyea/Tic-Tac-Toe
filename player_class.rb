@@ -12,8 +12,9 @@ class Player
     @sign = sign
   end
 
-  def on_turn_over
+  def on_update(callback)
     changed
-    notify_observers
+    notify_observers(callback)
   end
 end
+
