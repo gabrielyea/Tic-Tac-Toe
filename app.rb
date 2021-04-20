@@ -39,10 +39,10 @@ loop do
   puts 'Select a valid number '
   num = gets.chomp.to_i
 
-  break if num.zero?
+  next if num.zero? || num > 9
 
   player.make_move(num) if player.can_move?(num, tic_tac_toe)
-  game_manager.check_victory_state(player.sign, tic_tac_toe, finish)
+  game_manager.check_game_state(player.sign, tic_tac_toe, finish)
 
   break if game_over
 end
