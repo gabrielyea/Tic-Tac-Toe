@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
+# helper function for tic tac toe class
 module HelperFunctions
+  # simple struct for positionss
   Position = Struct.new(:x, :y)
   # proccess------
   # finds a value on a 2d array, callback decides what to do when value found
@@ -19,5 +23,8 @@ module HelperFunctions
 
   # callback for get_2d_array_pos, stores value to struct on a list.
   Store_on_list = ->(*args) { args[2].to_a << Convert_to_coord.call(args[0], args[1]) }
+
+  # gets the slope of two Position structs
+  Slope = ->(pos1, pos2) { (pos2.y - pos1.y) / (pos2.x - pos1.x).to_f }
   # -------------
 end

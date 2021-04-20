@@ -14,34 +14,43 @@ class TicTacToe
   end
 
   def call_event(method_name, *args)
-    send method_name, args[0][0], args[0][1], args[0][2] if respond_to?(method_name, true)
+    send method_name, args[0][0], args[0][1] if respond_to?(method_name, true)
   end
 
   # places player choice on board, invoked in call_event from player.invoke
-  def place_move(num, player_sign, bod)
-    n = Get_2d_array_pos.call(bod, num, Convert_to_coord)
-    bod[n.x][n.y] = player_sign
+  def place_move(num, player_sign)
+    n = get_selection_position(num, Convert_to_coord)
+    board[n.x][n.y] = player_sign
+  end
+
+  # checks is selected place is availible to mark
+  def valid_selection?(num)
+    n = get_selection_position(num, Convert_to_coord)
+    !n.nil?
   end
 
   # gets a list of all movement of selected player, used to calculate slope
-  def get_list_by_player(get_pos, store_on_list)
-    get_pos.call(board, 'x', store_on_list)
+  def get_list_by_player(player_sign)
+    get_selection_position(player_sign, Store_on_list)
   end
 
-  def check_victory_state(pos)
-    # gets the slope of two Position structs
-    slope = ->(pos1, pos2) { (pos2.y - pos1.y) / (pos2.x - pos1.x).to_f }
-    return false if pos.size < 3
+  def same_slope?(player_sign)
+    pos = get_list_by_player(player_sign)
+    return false if pos.nil? || pos.size < 3
 
-    0.upto(1).map { |num| slope.call(pos[num], pos[num + 1]) }.uniq.length == 1
+    0.upto(1).map { |num| Slope.call(pos[num], pos[num + 1]) }.uniq.length == 1
+  end
+
+  def draw_board(*_args)
+    board.each do |row|
+      print row
+      puts
+    end
   end
 
   private
 
-  def draw_board(*bod)
-    bod[2].each do |row|
-      print row
-      puts
-    end
+  def get_selection_position(num, callback)
+    Get_2d_array_pos.call(board, num, callback)
   end
 end

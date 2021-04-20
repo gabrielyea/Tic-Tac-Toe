@@ -15,7 +15,7 @@ class GameManager
     send method_name, args if respond_to?(method_name, true)
   end
 
-  def current_player(*args)
+  def current_player(*_args)
     @players[@player_index]
   end
 
@@ -23,22 +23,16 @@ class GameManager
     @players[index]
   end
 
+  def check_victory_state(player_sign, tic_tac_toe, callback)
+    callback.call("Player #{player_sign} won!!") if tic_tac_toe.same_slope?(player_sign)
+
+    callback.call('Tie, out of space!') if tic_tac_toe.get_list_by_player(player_sign).size >= 5
+  end
+
   private
 
-  def switch_player(*args)
+  def switch_player(*_args)
     @player_index += 1
     @player_index = @player_index % @players.size
-    #puts @players[@player_index].name
   end
 end
-
-# player1 = Player.new('p1', 'o')
-# player2 = Player.new('p2', '+')
-
-# game_manager = GameManager.new
-# game_manager.players << (player1)
-# game_manager.players << (player2)
-
-# player1.add_observer(game_manager, :switch_player)
-
-# player1.on_turn_over

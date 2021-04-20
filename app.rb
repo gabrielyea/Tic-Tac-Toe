@@ -24,14 +24,25 @@ game_manager.players.each do |player|
   player.on_move = %i[switch_player place_move draw_board]
 end
 
-# player1.invoke(:switch_player)
-# player1.invoke(:place_move, 1, player1.sign, tic_tac_toe.board)
-# player1.invoke(:place_move, 5, player1.sign, tic_tac_toe.board)
-# player1.invoke(:place_move, 3, player1.sign, tic_tac_toe.board)
+game_over = false
 
-# player1.invoke(:place_move, 2, player2.sign, tic_tac_toe.board)
-# player1.invoke(:place_move, 4, player2.sign, tic_tac_toe.board)
-# player1.invoke(:place_move, 7, player2.sign, tic_tac_toe.board)
+tic_tac_toe.draw_board
+num = 0
 
-player1.make_move(2, tic_tac_toe.board)
-# player1.invoke(:draw_board, tic_tac_toe.board)
+finish = lambda { |outcome|
+  puts outcome
+  game_over = true
+}
+
+loop do
+  player = game_manager.current_player
+  puts 'Select a valid number '
+  num = gets.chomp.to_i
+
+  break if num.zero?
+
+  player.make_move(num) if player.can_move?(num, tic_tac_toe)
+  game_manager.check_victory_state(player.sign, tic_tac_toe, finish)
+
+  break if game_over
+end
