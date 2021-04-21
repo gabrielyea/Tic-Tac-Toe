@@ -26,6 +26,7 @@ class Player
 
   private
 
+  # notify observers
   def invoke(callback, *args)
     changed
     notify_observers(callback, args)
