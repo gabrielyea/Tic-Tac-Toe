@@ -4,6 +4,7 @@ require_relative 'game_manager'
 require_relative 'player_class'
 require_relative 'game_board'
 
+#------App init settings------------------------
 # players ------
 player1 = Player.new('p1', 'x')
 player2 = Player.new('p2', 'o')
@@ -27,22 +28,29 @@ end
 game_over = false
 
 tic_tac_toe.draw_board
-num = 0
+user_input = 0
 
-finish = lambda { |outcome|
+# callback for game over
+set_game_state = lambda { |outcome|
   puts outcome
   game_over = true
 }
+# --------------------------------------------
 
+
+# ---------main game loop-----------
 loop do
   player = game_manager.current_player
-  puts 'Select a valid number '
-  num = gets.chomp.to_i
+  puts 'Select a valid number'
+  user_input = gets.chomp.to_i
 
-  next if num.zero? || num > 9
+  next if user_input.zero? || user_input > 9
 
-  player.make_move(num) if player.can_move?(num, tic_tac_toe)
-  game_manager.check_game_state(player.sign, tic_tac_toe, finish)
+  # marks selection if it is availibe in the board
+  player.make_move(user_input) if player.can_move?(user_input, tic_tac_toe)
+  # searches for victory or game over conditions
+  game_manager.check_game_state(player.sign, tic_tac_toe, set_game_state)
 
   break if game_over
 end
+# ----------------------------------
