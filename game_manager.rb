@@ -25,9 +25,9 @@ class GameManager
   end
 
   def check_game_state(player_sign, tic_tac_toe, callback)
-    callback.call("Player #{player_sign} won!!") if tic_tac_toe.same_slope?(player_sign)
+    callback.call("Player #{player_sign} won!!") if tic_tac_toe.line_found?(player_sign)
 
-    callback.call('Tie, out of space!') if tic_tac_toe.get_list_by_player(player_sign).size >= 5
+    callback.call('Out of space!') if tic_tac_toe.get_list_by_player(player_sign).size >= 5
   end
 
   private

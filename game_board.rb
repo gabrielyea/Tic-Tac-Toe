@@ -34,11 +34,10 @@ class TicTacToe
     get_selection_position(player_sign, Store_on_list)
   end
 
-  def same_slope?(player_sign)
+  def line_found?(player_sign)
     pos = get_list_by_player(player_sign)
-    return false if pos.nil? || pos.size < 3
-
-    0.upto(1).map { |num| Slope.call(pos[num], pos[num + 1]) }.uniq.length == 1
+    puts !search_line(pos).empty?
+    !search_line(pos).empty?
   end
 
   def draw_board(*_args)
@@ -52,5 +51,11 @@ class TicTacToe
 
   def get_selection_position(num, callback)
     Get_2d_array_pos.call(board, num, callback)
+  end
+
+  def search_line(pos)
+    pos.combination(3).select do |combi|
+      Slope.call(combi[0..1]) == Slope.call(combi[1..2])
+    end
   end
 end

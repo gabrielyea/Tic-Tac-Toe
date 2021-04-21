@@ -25,6 +25,6 @@ module HelperFunctions
   Store_on_list = ->(*args) { args[2].to_a << Convert_to_coord.call(args[0], args[1]) }
 
   # gets the slope of two Position structs
-  Slope = ->(pos1, pos2) { (pos2.y - pos1.y) / (pos2.x - pos1.x).to_f }
+  Slope = ->(pair) { (pair[1].y - pair[0].y) / (pair[1].x - pair[0].x).to_f }
   # -------------
 end
